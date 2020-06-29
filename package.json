@@ -5,6 +5,7 @@
   "main": "sync.js",
   "scripts": {
     "start": "node sync.js",
+    "sync": "node sync.js",
     "setup": "node setup.js"
   },
   "author": "Michael Ficocelli",

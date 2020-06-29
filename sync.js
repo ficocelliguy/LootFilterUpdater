@@ -7,31 +7,14 @@ const path = require('path');
 const launchOptions = {
     userDataDir: path.resolve('./myUserDataDir'),
     headless: true,
-    args: [
-        '--proxy-server="direct://"',
-        '--proxy-bypass-list=*'
-    ],
-    ignoreDefaultArgs: ['--disable-extensions'],
     timeout: 5000
-};
-
-const clickButton = async function(id, page) {
-    console.log("Clicking ", id);
-    try {
-        await page.evaluate((id) => {
-            document.getElementById(id).click();
-        }, id);
-    } catch (e) {
-        throw new Error("Error clicking button with ID " + id)
-    }
 };
 
 (async () => {
 
-
     console.log("Preparing... ");
     const browser = await puppeteer.launch(launchOptions);
-    const index = config.Filter_Index;
+    const indexArr = config.Filter_Index;
     const [filterPage] = await browser.pages();
     filterPage.setUserAgent("Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1");
 
@@ -50,25 +33,22 @@ const clickButton = async function(id, page) {
     }
 
 
-    // Load and re-save the filter at the configured index
-    await clickButton("SelectionButton5", filterPage);
-    await utils.sleep(3000);
-    await clickButton("LoadProfileSaveState" + index, filterPage);
-    await utils.sleep(3000);
-    await clickButton("SaveProfileSaveState" + index, filterPage);
-    await utils.sleep(3000);
+     // update each filter specified by index in config
+     for (let index, i = 0; i < indexArr.length; i++) {
+         // Load and re-save the filter at the configured index
+        index = indexArr[i];
+        await utils.clickButton("SelectionButton5", filterPage);
+        await utils.clickButton("LoadProfileSaveState" + index, filterPage);
+        await utils.clickButton("SaveProfileSaveState" + index, filterPage);
 
-    // Sync with Poe
-    await clickButton("SelectionButton6", filterPage);
-    await utils.sleep(1000);
-    await clickButton("uploadFilterToPoeButton", filterPage);
-    await utils.sleep(2000);
+        // Sync with Poe
+        await utils.clickButton("SelectionButton6", filterPage, 1000);
+        await utils.clickButton("uploadFilterToPoeButton", filterPage, 2000);
 
-    // Overwrite and confirm the filter at the configured index
-    await clickButton("OverwritePoeFilter" + index, filterPage);
-    await utils.sleep(1000);
-    await clickButton("configPoeFilter_Apply", filterPage);
-    await utils.sleep(1000);
+        // Overwrite and confirm the filter at the configured index
+        await utils.clickButton("OverwritePoeFilter" + index, filterPage, 1000);
+        await utils.clickButton("configPoeFilter_Apply", filterPage);
+    }
 
     await browser.close();
 

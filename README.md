@@ -1,10 +1,10 @@
-Project setup:
+**Project setup:**
 
 1) Install node from `https://nodejs.org/en/download/`
 2) run `npm install` in this directory
 
 
-To set up the script the first time and to log in if sessions expire:
+**To set up the script the first time and to log in if sessions expire:**
 
 1) run `npm run setup`
 
@@ -19,5 +19,9 @@ To set up the script the first time and to log in if sessions expire:
 
 5) Once all the sites have your session correctly loaded, close Chromium.
 
+6) Open `config.json` and change the array under `"Filter_Index": [0, 1, 2]` to be the indices of the filters you want to have updated
 
-To update the script
+
+**To run the update script**
+
+1) run `npm start`

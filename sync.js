@@ -43,7 +43,7 @@ const launchOptions = {
 
         // Sync with Poe
         await utils.clickButton("SelectionButton6", filterPage, 1000);
-        await utils.clickButton("uploadFilterToPoeButton", filterPage, 2000);
+        await utils.clickButton("uploadFilterToPoeButton", filterPage);
 
         // Overwrite and confirm the filter at the configured index
         await utils.clickButton("OverwritePoeFilter" + index, filterPage, 1000);

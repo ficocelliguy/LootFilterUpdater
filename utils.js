@@ -6,7 +6,7 @@ module.exports = {
         });
     },
 
-    clickButton: async function(id, page, timeout = 3000) {
+    clickButton: async function(id, page, timeout = 4000) {
         console.log("Clicking ", id);
         try {
             await page.evaluate((id) => {
